@@ -1,6 +1,13 @@
+import { format } from "jsr:@std/internal@^1.0.0/format";
+
+export { batch } from "https://deno.land/x/denops_std@v6.5.1/batch/batch.ts";
+export { format } from "https://deno.land/x/denops_std@v6.5.1/bufname/mod.ts";
+export { open } from "https://deno.land/x/denops_std@v6.5.1/buffer/mod.ts";
+
 export { type Denops } from "https://deno.land/x/denops_std@v6.5.1/mod.ts";
+
 export { execute } from "https://deno.land/x/denops_std@v6.5.1/function/mod.ts";
-export { ensure, is } from "jsr:@core/unknownutil";
+export { ensure, is, isNullish } from "jsr:@core/unknownutil@3.18.1";
 
 export type {
   DduOptions,
