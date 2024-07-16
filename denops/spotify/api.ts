@@ -4,9 +4,11 @@ import {
   resumePlayback,
   skipToNext,
   skipToPrevious,
-} from "https://deno.land/x/soundify@v1.1.0/endpoints/mod.ts";
+} from "https://deno.land/x/soundify@v1.1.5/endpoints/mod.ts";
 import { is } from "../../deps.ts";
-import { type HTTPClient } from "https://deno.land/x/soundify@v1.1.0/client.ts";
+import { type HTTPClient } from "https://deno.land/x/soundify@v1.1.5/client.ts";
+import { launchAuthServer, openBrowser } from "../../oauth_pkce.ts";
+import { delay } from "jsr:@std/async/delay";
 
 export async function nowplaying(client: HTTPClient): Promise<unknown> {
   const nowplaying = await getPlaybackState(client);
@@ -41,4 +43,16 @@ export async function toNext(client: HTTPClient) {
 
 export async function toPrevious(client: HTTPClient) {
   await skipToPrevious(client);
+}
+
+export async function startAuth() {
+  const server = launchAuthServer();
+  await openBrowser();
+
+  const sec = 10;
+  await delay(sec * 1000);
+
+  server.shutdown();
+
+  return Promise.resolve();
 }
