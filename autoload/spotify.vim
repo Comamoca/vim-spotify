@@ -23,3 +23,7 @@ endfunction
 function! spotify#previous() abort
 	return s:call_denops('previous', [])
 endfunction
+
+function! spotify#auth() abort
+	return s:call_denops('auth', [])
+endfunction
