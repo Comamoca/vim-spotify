@@ -4,12 +4,13 @@ import {
   resumePlayback,
   skipToNext,
   skipToPrevious,
+  startPlayback,
 } from "https://deno.land/x/soundify@v1.1.5/endpoints/mod.ts";
 import { is } from "../../deps.ts";
 import { type HTTPClient } from "https://deno.land/x/soundify@v1.1.5/client.ts";
-import { launchAuthServer, openBrowser } from "../../oauth_pkce.ts";
+import { launchAuthServer, openBrowser } from "./oauth_pkce.ts";
 import { delay } from "jsr:@std/async/delay";
-
+import { getAvailableDevices } from "https://deno.land/x/soundify@v1.1.5/mod.ts";
 export async function nowplaying(client: HTTPClient): Promise<unknown> {
   const nowplaying = await getPlaybackState(client);
 
@@ -23,11 +24,7 @@ export async function nowplaying(client: HTTPClient): Promise<unknown> {
 export async function playbackState(client: HTTPClient) {
   const state = await getPlaybackState(client);
 
-  if (is.Null(state)) {
-    return null;
-  } else if (state) {
-    return state;
-  }
+  return state;
 }
 
 export async function pause(client: HTTPClient) {
@@ -45,11 +42,18 @@ export async function toPrevious(client: HTTPClient) {
   await skipToPrevious(client);
 }
 
-export async function startAuth() {
+export async function availableDevices(client: HTTPClient) {
+  return await getAvailableDevices(client);
+}
+
+export async function playbackStart(client: HTTPClient) {
+  return await startPlayback(client);
+}
+
+export async function startAuth(sec = 10) {
   const server = launchAuthServer();
   await openBrowser();
 
-  const sec = 10;
   await delay(sec * 1000);
 
   server.shutdown();
