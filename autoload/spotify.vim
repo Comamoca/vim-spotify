@@ -27,3 +27,11 @@ endfunction
 function! spotify#auth() abort
 	return s:call_denops('auth', [])
 endfunction
+
+function! spotify#playbackState() abort
+	return s:call_denops('playbackState', [])
+endfunction
+
+function! spotify#availableDevices() abort
+	return s:call_denops('availableDevices', [])
+endfunction
