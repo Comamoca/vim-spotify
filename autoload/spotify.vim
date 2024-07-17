@@ -1,3 +1,8 @@
+if exists('g:loaded_vim_spotify')
+  finish
+endif
+let g:loaded_vim_spotify = 1
+
 let s:plugin_name = 'spotify'
 
 function! s:call_denops(fn_name, args)
