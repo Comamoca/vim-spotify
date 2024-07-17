@@ -1,5 +1,3 @@
-import { format } from "jsr:@std/internal@^1.0.0/format";
-
 export { batch } from "https://deno.land/x/denops_std@v6.5.1/batch/batch.ts";
 export { format } from "https://deno.land/x/denops_std@v6.5.1/bufname/mod.ts";
 export { open } from "https://deno.land/x/denops_std@v6.5.1/buffer/mod.ts";

@@ -12,6 +12,7 @@
       "jsr:@std/assert@0.226.0": "jsr:@std/assert@0.226.0",
       "jsr:@std/assert@1.0.0": "jsr:@std/assert@1.0.0",
       "jsr:@std/assert@^0.226.0": "jsr:@std/assert@0.226.0",
+      "jsr:@std/async": "jsr:@std/async@0.224.2",
       "jsr:@std/async@0.224.2": "jsr:@std/async@0.224.2",
       "jsr:@std/collections@^1.0.4": "jsr:@std/collections@1.0.4",
       "jsr:@std/encoding": "jsr:@std/encoding@1.0.1",
