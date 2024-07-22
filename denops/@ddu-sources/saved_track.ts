@@ -1,15 +1,22 @@
-import { Params, SpotifyBaseSource } from "../../source/base.ts";
 import type { DduOptions, Item, SourceOptions } from "../../deps.ts";
-import { Denops } from "../../deps.ts";
+import { BaseSource, Denops, ensure, fn, is } from "../../deps.ts";
 import { ActionData } from "../@ddu-kinds/spotify.ts";
+import { loadPluginData, PluginDataType } from "../spotify/load.ts";
+import { SpotifyBaseSource } from "../../base/source.ts";
+import { createClient } from "../spotify/utils.ts";
 import {
-  getCurrentUsersPlaylists,
   getSavedTracks,
   HTTPClient,
   SimplifiedPlaylist,
   SpotifyClient,
 } from "https://deno.land/x/soundify@v1.1.5/mod.ts";
 import { PagingObject } from "https://deno.land/x/soundify@v1.1.5/endpoints/general.types.ts";
+
+// MEMO: call ddu#start({'sources': [{'name': 'user_playlist', 'params': {}}]})
+
+type Params = {
+  userid?: string;
+};
 
 export class Source extends SpotifyBaseSource<Params> {
   override gather(args: {
@@ -26,12 +33,9 @@ export class Source extends SpotifyBaseSource<Params> {
         const collect = async () => {
           try {
             // TODO: Replace to Enviroment variable.
-            const token = Deno.readTextFileSync("token");
+            // const token = Deno.readTextFileSync("token");
 
-            const client: HTTPClient = new SpotifyClient(token);
-
-            const user_playlists: PagingObject<SimplifiedPlaylist> =
-              await getCurrentUsersPlaylists(client);
+            const client = await createClient();
 
             // {
             //   word: "one",

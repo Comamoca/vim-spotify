@@ -1,8 +1,9 @@
 import type { DduOptions, Item, SourceOptions } from "../../deps.ts";
-import { BaseSource } from "../../deps.ts";
-import { Denops, fn } from "../../deps.ts";
+import { BaseSource, Denops, ensure, fn, is } from "../../deps.ts";
 import { ActionData } from "../@ddu-kinds/spotify.ts";
-import { SpotifyBaseSource } from "../../source/base.ts";
+import { loadPluginData, PluginDataType } from "../spotify/load.ts";
+import { SpotifyBaseSource } from "../../base/source.ts";
+import { createClient } from "../spotify/utils.ts";
 import {
   getCurrentUsersPlaylists,
   HTTPClient,
@@ -31,11 +32,8 @@ export class Source extends SpotifyBaseSource<Params> {
 
         const collect = async () => {
           try {
-            // TODO: Replace to Enviroment variable.
-            const token = Deno.readTextFileSync("token");
-
-            const client: HTTPClient = new SpotifyClient(token);
-
+            const client = await createClient();
+            // Setup spotify client
             const user_playlists: PagingObject<SimplifiedPlaylist> =
               await getCurrentUsersPlaylists(client);
 
