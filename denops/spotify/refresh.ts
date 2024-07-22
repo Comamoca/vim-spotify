@@ -35,12 +35,8 @@ export async function refreshToken() {
 
   const data = await resp.json();
 
-  console.log(data);
-
   const { access_token, refresh_token } = data;
 
-  console.log(access_token);
-  console.log(refresh_token);
 
   await savePluginData({
     access_token: access_token,
