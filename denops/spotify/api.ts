@@ -6,8 +6,9 @@ import {
   skipToPrevious,
   startPlayback,
 } from "https://deno.land/x/soundify@v1.1.5/endpoints/mod.ts";
-import { is } from "../../deps.ts";
+import { ensure, is } from "../../deps.ts";
 import { type HTTPClient } from "https://deno.land/x/soundify@v1.1.5/client.ts";
+import { type PlaybackState } from "https://deno.land/x/soundify@v1.1.5/mod.ts";
 import { launchAuthServer, openBrowser } from "./oauth_pkce.ts";
 import { delay } from "jsr:@std/async/delay";
 import { getAvailableDevices } from "https://deno.land/x/soundify@v1.1.5/mod.ts";
@@ -30,8 +31,17 @@ export async function playbackState(client: HTTPClient) {
 export async function pause(client: HTTPClient) {
   await pausePlayback(client);
 }
-export async function resume(client: HTTPClient) {
-  await resumePlayback(client);
+export async function resume(
+  client: HTTPClient,
+  id?: string,
+  context?: string,
+  uris?: string[],
+) {
+  await resumePlayback(client, {
+    device_id: id,
+    context_uri: context,
+    uris: uris,
+  });
 }
 
 export async function toNext(client: HTTPClient) {
